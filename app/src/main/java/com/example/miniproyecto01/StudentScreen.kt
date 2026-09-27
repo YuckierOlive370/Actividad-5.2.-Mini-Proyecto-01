@@ -1,5 +1,6 @@
 package com.example.miniproyecto01
 
+import android.widget.MediaController
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -44,6 +45,7 @@ val AppBackground = Color(0xFFF4EEFD)
 @Composable
 fun RegisterStudent() {
     var matricula by remember { mutableStateOf("") }
+    var nombre by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,6 +93,32 @@ fun RegisterStudent() {
                 textStyle = MaterialTheme.typography.bodyMedium,
                 value =matricula,
                 onValueChange = { matricula = it },
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color(0xFFFFFFFF),
+                    unfocusedContainerColor = Color(0xFFFFFFFF),
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black
+                )
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+                .border(BoxBorderSize, BoxBorderColor, RoundedCornerShape(20.dp))
+                .background(BoxColor)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text("Nombre Completo", style= MaterialTheme.typography.titleMedium)
+
+            OutlinedTextField(
+                textStyle = MaterialTheme.typography.bodyMedium,
+                value =nombre,
+                onValueChange = { nombre = it },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFFFFFFF),

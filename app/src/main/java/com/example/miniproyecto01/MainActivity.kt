@@ -18,7 +18,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RegisterStudent()
+            ConfirmationScreen(
+                matricula = "22123456",
+                nombre = "Juan Pérez",
+                carrera = "ISC",
+                turno = "Matutino",
+                estatus = "Activo"
+            )
         }
     }
 }
