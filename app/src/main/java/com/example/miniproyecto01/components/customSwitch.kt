@@ -7,27 +7,26 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomSwitch() {
-    var isChecked by remember { mutableStateOf(false)}
-
+fun CustomSwitch(
+    // Estado del interruptor recibido desde el formulario padre (State Hoisting)
+    isChecked: Boolean,
+    // Callback para notificar cambios en el interruptor
+    onCheckedChange: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-    verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("Estudiante Alta/Baja", fontSize = 16.sp, style= MaterialTheme.typography.titleMedium)
+        Text("Estudiante Alta/Baja", fontSize = 16.sp, style = MaterialTheme.typography.titleMedium)
         Switch(
             checked = isChecked,
-            onCheckedChange = { isChecked = it}
+            onCheckedChange = onCheckedChange
         )
     }
 }

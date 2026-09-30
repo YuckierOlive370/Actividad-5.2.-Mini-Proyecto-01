@@ -12,10 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,8 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomRadioButton() {
-    var selectedOption by remember { mutableStateOf("Matutino")}
+fun CustomRadioButton(
+    // Recibe la opción seleccionada desde el padre (State Hoisting)
+    selectedOption: String,
+    // Callback para notificar la nueva opción seleccionada
+    onOptionSelected: (String) -> Unit
+) {
     val turnos: Array<String> = arrayOf("Matutino", "Vespertino", "Nocturno")
 
     Row(
@@ -34,21 +34,18 @@ fun CustomRadioButton() {
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(Color(0xFFF5F5F5))
-            //.border(0.dp, BoxBorderColor, RoundedCornerShape(20.dp)),
-
     ) {
         for (text in turnos) {
             RadioButton(
                 modifier = Modifier.size(28.dp),
                 selected = (selectedOption == text),
-                onClick = { selectedOption = text}
+                onClick = { onOptionSelected(text) }
             )
             Text(
                 text = text,
-                modifier = Modifier.clickable { selectedOption = text}
+                modifier = Modifier.clickable { onOptionSelected(text) }
             )
             if (text != turnos.lastOrNull()) Spacer(modifier = Modifier.width(12.dp))
         }
-
     }
 }

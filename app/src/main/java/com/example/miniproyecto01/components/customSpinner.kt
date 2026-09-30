@@ -20,9 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun CustomSpinner() {
+fun CustomSpinner(
+    // Texto de la carrera seleccionada recibido desde el formulario padre (State Hoisting)
+    selectedText: String,
+    // Callback para notificar cuando el usuario selecciona una nueva carrera
+    onTextSelected: (String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Seleccionar Opción") }
 
     Box(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -31,9 +35,8 @@ fun CustomSpinner() {
             readOnly = true,
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
-                IconButton(onClick = { expanded = true}) {
+                IconButton(onClick = { expanded = true }) {
                     Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-
                 }
             },
             colors = OutlinedTextFieldDefaults.colors(
@@ -44,49 +47,26 @@ fun CustomSpinner() {
             )
         )
 
-        DropdownMenu (
+        DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false}
+            onDismissRequest = { expanded = false }
         ) {
-            DropdownMenuItem(
-                text = { Text("Lic. en Ing. Civil")},
-                onClick = {
-                    selectedText = "Lic. en Ing. Civil"
-                    expanded = false
-                }
+            val carreras = listOf(
+                "Lic. en Ing. Civil",
+                "Lic. en Ing. Geodésica",
+                "Lic. en Ing. de Software",
+                "Lic. en Ing. en Proc. Industriales",
+                "Lic. en Ing. en Nano. y Ene. Renov."
             )
-
-            DropdownMenuItem(
-                text = { Text("Lic. en Ing. Geodésica")},
-                onClick = {
-                    selectedText = "Lic. en Ing. Geodésica"
-                    expanded = false
-                }
-            )
-
-            DropdownMenuItem(
-                text = { Text("Lic. en Ing. de Software")},
-                onClick = {
-                    selectedText = "Lic. en Ing. de Software"
-                    expanded = false
-                }
-            )
-
-            DropdownMenuItem(
-                text = { Text("Lic. en Ing. en Proc. Industriales")},
-                onClick = {
-                    selectedText = "Lic. en Ing. en Proc. Industriales"
-                    expanded = false
-                }
-            )
-
-            DropdownMenuItem(
-                text = { Text("Lic. en Ing. en Nano. y Ene. Renov.")},
-                onClick = {
-                    selectedText = "Lic. en Ing. en Nano. y Ene. Renov."
-                    expanded = false
-                }
-            )
+            carreras.forEach { carrera ->
+                DropdownMenuItem(
+                    text = { Text(carrera) },
+                    onClick = {
+                        onTextSelected(carrera)
+                        expanded = false
+                    }
+                )
+            }
         }
     }
 }
